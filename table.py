@@ -13,6 +13,7 @@ class Table:
         self.table = {"Танки": self.tank}
         self.hand = Cup()
         self.tank = 0
+        na_koroble = {'people': 0, 'chiken': 0, 'cow': 0, 'laser': 0, }
 
     # бросок и отбор танков
     def put_aside(self):
