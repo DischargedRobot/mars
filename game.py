@@ -9,6 +9,7 @@ def people_1():
         table_game.people += table_game.hand.people
         return True
     return False
+
 def chiken_1():
     if table_game.chiken == 0:
         table_game.hand.numbers -= table_game.hand.chiken
