@@ -1,19 +1,16 @@
 from cup import Cup
 from cube import Cube
 import copy
+from prettytable import PrettyTable
 
 class Table:
     """ Игровой стол """
     def __init__(self):
-        self.cow = 0
-        self.laser = 0
-        self.chiken = 0
-        self.people = 0
-        self.tank = 0
-        self.table = {"Танки": self.tank}
-        self.hand = Cup()
-        self.tank = 0
-        na_koroble = {'people': 0, 'chiken': 0, 'cow': 0, 'laser': 0, }
+        self.dice_on_table = {'человек': 0, 'курица': 0, 'корова': 0, 'лазер': 0, 'танк': 0}
+        self.plate = {'человек': 0, 'курица': 0, 'корова': 0, 'лазер': 0, 'танк': 0 }
+
+    def __repr__(self):
+        return str(self.dice_on_table)
 
     # бросок и отбор танков
     def put_aside(self):
@@ -25,3 +22,5 @@ class Table:
         self.hand.laser = self.hand.list_cup.count("лазер")
         self.hand.chiken = self.hand.list_cup.count("курица")
         self.hand.people = self.hand.list_cup.count("человек")
+
+
