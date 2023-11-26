@@ -10,3 +10,4 @@ while True:
     if game.table.plate['танк'] > game.table.plate['лазер'] + game.cup.numbers:
         print('end')
         break
+
