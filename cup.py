@@ -11,7 +11,7 @@ class Cup:
 
     # бросок кубиков
     def cast(self):
-        self.list_cup = [Cube().sides[random.randint(0,5)] for i in range(self.numbers)]
+        self.list_cup = [Cube(random.randint(0,5)).creature for i in range(self.numbers)]
         return self.list_cup
 
 
