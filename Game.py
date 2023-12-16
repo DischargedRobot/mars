@@ -1,7 +1,11 @@
+import pygame
+
 from cup import Cup
 from table import Table
 from prettytable import PrettyTable
 from pytest import *
+from settings_view import GEOM
+from game_view import GameView
 class Game:
     def __init__(self):
         self.cup = Cup()
@@ -9,6 +13,7 @@ class Game:
         self.all_table = PrettyTable()
         self.creatures_flag = {'1': 0, '2': 0, '3': 0, '4': 0}
         self.flag = 0
+        self.gameview = GameView(GEOM['display'][0], GEOM['display'][1])
     def aside(self, action):
         ''' Откладывание кубиков в строну '''
         def crows():
@@ -66,25 +71,34 @@ class Game:
             return score + 3
         return score
 
+    def action_1(self):
+        ''' Бросок кубиков'''
+        for key in list(self.table.dice_on_table.keys()):  # записываем все выпавшие значения в список стола
+            self.table.dice_on_table[key] = self.cup.list_cup.count(key)
+        self.table.plate['танк'] += self.cup.list_cup.count('танк')  # откладываем танки в сторону
+        self.cup.numbers -= self.cup.list_cup.count('танк')  # вычитаем из кол-во кубиков кол-во танков
+        self.paint_all_table()
+        while True:  # запускаем вечный цикл, пока пользователь не закончит ходить
+            flag = input(
+                'Что вы хотите сделать?\n1)Забрать людей\n2)Забрать куриц\n3)Забрать коров\n4)Забрать лазеры\n5)Закончить ход\n')
+            if flag == '5':
+                break
+            self.aside(flag)
+            self.paint_all_table()
+        self.creatures_flag['4'] = 0  # обнуление флагов для следующего хода
+        self.flag = 0
     def step(self, action: 0):
-        ''' Откладываем танки'''
+        ''' Действия во врем хода'''
         if action == '1': # бросаем кубики
             self.cup.cast()
-            for key in list(self.table.dice_on_table.keys()): # записываем все выпавшие значения в список стола
-                self.table.dice_on_table[key] = self.cup.list_cup.count(key)
-            self.table.plate['танк'] += self.cup.list_cup.count('танк')  # откладываем танки в сторону
-            self.cup.numbers -= self.cup.list_cup.count('танк') # вычитаем из кол-во кубиков кол-во танков
-
-            self.paint_all_table()
-            while True: # запускаем вечный цикл, пока пользователь не закончит ходить
-                flag = input('Что вы хотите сделать?\n1)Забрать людей\n2)Забрать куриц\n3)Забрать коров\n4)Забрать лазеры\n5)Закончить ход\n')
-                if flag == '5':
-                    break
-                self.aside(flag)
-                self.paint_all_table()
-            self.creatures_flag['4'] = 0 #обнуление флагов для следующего хода
-            self.flag = 0
+            self.gameview.redraw_table()
+            self.gameview.redraw_cubes(self.cup.list_cup)
+            self.action_1()
         elif action == '2': #просмотр содержимого стола
             print(self.all_table)
         else:
             print("Вы ввели неверное числа, повторите попытку")
+    # def run(self):
+    #     running = True
+    #     while running:
+    #     self.gameview.redraw_cubes()

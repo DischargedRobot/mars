@@ -8,4 +8,3 @@ class Cube:
     def __repr__(self):
         return f'{self.creature}'
 
-print(repr(Cube(0)))
