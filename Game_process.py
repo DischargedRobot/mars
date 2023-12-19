@@ -1,6 +1,5 @@
 
 from game import Game
-
 import pygame
 
 clock = pygame.time.Clock()
