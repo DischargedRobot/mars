@@ -39,3 +39,4 @@ class CubeView(pygame.Rect):
         self.y += (self.y_motion)*0.0166
 
 
+
